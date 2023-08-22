@@ -194,13 +194,15 @@ This means that each student in the group will need to have their own installati
 - [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
 - [Docker](https://www.docker.com/)
 
-2. Make sure that Docker is running and then open up a new Terminal/Powershell instance and run the following command:
+2. Since SQL Server is not native to Mac or Linux, we need to use Microsoft's official [Docker image](https://hub.docker.com/_/microsoft-mssql-server) to simulate an environment that can run SQL Server. Make sure that Docker is running and then open up a new Terminal/Powershell instance and run the following command:
 
     ```bash
     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=P@ssw0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
     ```
 
     If you want to change the password, then, from the official documentation, the password needs to be "*at least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols.*"
+
+    **Note:** any time you are trying to access the database, you need to ensure that the SQL Server container is running. You can do this by going to the *containers* tab in Docker Desktop and hitting the play button next to the appropriate container.
 
 3. Open Azure Data Studio and connect to the SQL Server instance using the following parameters:
 
