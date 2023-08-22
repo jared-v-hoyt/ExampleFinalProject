@@ -6,35 +6,35 @@ This guide is divided into two separate sections; the first for users who prefer
 
 Use the following links to skip to the different sections:
 
-  - [Steps to Recreate The Project: (WINDOWS)](#steps-to-recreate-the-project-windows)
-  - [Steps To Recreate The Project: (MAC/WINDOWS/LINUX)](#steps-to-recreate-the-project-macwindowslinux)
+-   [Steps to Recreate The Project: (WINDOWS)](#steps-to-recreate-the-project-windows)
+-   [Steps To Recreate The Project: (MAC/WINDOWS/LINUX)](#steps-to-recreate-the-project-macwindowslinux)
 
 ## Steps to Recreate The Project: (WINDOWS)
 
 1. Download the following tools (if you haven't already):
 
-   - [SQL Server 2022 (Express)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-   - [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+    - [SQL Server 2022 (Express)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+    - [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
 2. Open SQL Server Management Studio and connect to a local instance of your SQL Server engine.
 
-   - Server type: `Database Engine`
-   - Server name: `localhost\SQLEXPRESS`
-     - **note:** this is a _backslash_
-   - Authentication: `Windows Authentication`
+    - Server type: `Database Engine`
+    - Server name: `localhost\SQLEXPRESS`
+        - **note:** this is a _backslash_
+    - Authentication: `Windows Authentication`
 
-   ![SQL Server Connection](https://media.discordapp.net/attachments/929399365318115369/1141723245230444584/SQL_Server_Connection.png)
+    ![SQL Server Connection](https://media.discordapp.net/attachments/929399365318115369/1141723245230444584/SQL_Server_Connection.png)
 
 3. After connecting, right-click on your database engine (localhost\SQLEXPRESS), select `New Query`, and execute the following code:
 
-   ```sql
-   CREATE DATABASE ExampleDatabase;
-   GO
-   ```
+    ```sql
+    CREATE DATABASE ExampleDatabase;
+    GO
+    ```
 
 4. Refresh the explorer and you should now see your newly-created database by expanding the `Databases` folder.
 
-   ![Newly-created database](https://media.discordapp.net/attachments/929399365318115369/1141727127478210570/New_Database.png)
+    ![Newly-created database](https://media.discordapp.net/attachments/929399365318115369/1141727127478210570/New_Database.png)
 
     Right click on `ExampleDatabase`, select `New Query`, and execute the following code:
 
@@ -126,33 +126,36 @@ Use the following links to skip to the different sections:
     EXECUTE GetOrderItems 6;
     ```
 
-   You should see the result of the two `EXECUTE` statements appear in the bottom pane.
+    You should see the result of the two `EXECUTE` statements appear in the bottom pane.
 
 ## Steps To Recreate The Project: (MAC/WINDOWS/LINUX)
 
 1. Download the following tools (if you haven't already):
 
-  - [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
-  - [Docker](https://www.docker.com/)
+-   [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
+-   [Docker](https://www.docker.com/)
 
 2. Open up a new Terminal/Powershell instance and run the following command:
+
     ```bash
-    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=yourStrong(!)Password" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+    docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=P@ssw0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
     ```
 
 3. Open Azure Data Studio and connect to the SQL Server instance using the following parameters:
 
     ![SQL Server Connection](https://media.discordapp.net/attachments/929399365318115369/1143153990431936592/Azure_Data_Studio_Connection.png)
 
-    where your password is the password that you set up in step 2. If prompted, click *Enable Trust Server Certificate*.
+    where your password is the password that you set up in step 2. If prompted, click _Enable Trust Server Certificate_.
 
 4. Navigate to `File -> New Query` and run the following query:
+
     ```sql
     CREATE DATABASE ExampleDatabase;
     GO
     ```
 
 5. From the solution explorer on the left, right-click on the new database (you might need to refresh the explorer), select `New Query`, and run the following query:
+
     ```sql
     USE ExampleDatabase;
 
@@ -240,4 +243,5 @@ Use the following links to skip to the different sections:
     EXECUTE GetProducts;
     EXECUTE GetOrderItems 6;
     ```
+
     You should see the result of the two `EXECUTE` statements appear in the bottom pane.
