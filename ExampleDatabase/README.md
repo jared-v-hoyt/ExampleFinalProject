@@ -1,13 +1,13 @@
 # ExampleDatabase
 
-**DISCLAIMER:** _This repository is to be used as a guide in setting up the final project for CSCE-361 at the University of Nebraska-Lincoln._
+**DISCLAIMER:** *This repository is to be used as a guide in setting up the final project for CSCE-361 at the University of Nebraska-Lincoln.*
 
 This guide is divided into two separate sections; the first for users who prefer to code in an environment built specifically for Windows OS, and the second for Mac/Linux users or for Windows users that do not prefer to use Windows-specific tools.
 
 Use the following links to skip to the different sections:
 
--   [Steps to Recreate The Project: (WINDOWS)](#steps-to-recreate-the-project-windows)
--   [Steps To Recreate The Project: (MAC/WINDOWS/LINUX)](#steps-to-recreate-the-project-macwindowslinux)
+- [Steps to Recreate The Project: (WINDOWS)](#steps-to-recreate-the-project-windows)
+- [Steps To Recreate The Project: (MAC/WINDOWS/LINUX)](#steps-to-recreate-the-project-macwindowslinux)
 
 ## Steps to Recreate The Project: (WINDOWS)
 
@@ -16,16 +16,11 @@ Use the following links to skip to the different sections:
     - [SQL Server 2022 (Express)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
     - [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
-2. Open SQL Server Management Studio and connect to a local instance of your SQL Server engine.
-
-    - Server type: `Database Engine`
-    - Server name: `localhost\SQLEXPRESS`
-        - **note:** this is a _backslash_
-    - Authentication: `Windows Authentication`
+2. Open SQL Server Management Studio and connect to a local instance of the SQL Server engine using the following options:
 
     ![SQL Server Connection](https://media.discordapp.net/attachments/929399365318115369/1141723245230444584/SQL_Server_Connection.png)
 
-3. After connecting, right-click on your database engine (localhost\SQLEXPRESS), select `New Query`, and execute the following code:
+3. After connecting, right-click on your database engine (`localhost\SQLEXPRESS`), select `New Query`, and execute the following code:
 
     ```sql
     CREATE DATABASE ExampleDatabase;
@@ -121,7 +116,71 @@ Use the following links to skip to the different sections:
         WHERE OrderItems.OrderId = @OrderId;
       END
     GO
+    ```
 
+    Let's go through what is happening in this code. First,
+
+    ```sql
+    DROP TABLE IF EXISTS OrderItems;
+    DROP TABLE IF EXISTS Orders;
+    DROP TABLE IF EXISTS Products;
+
+    ...
+
+    CREATE TABLE Products
+    (
+      ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+      ProductName VARCHAR(MAX) NOT NULL,
+      UnitPrice MONEY NOT NULL
+    );
+
+    CREATE TABLE Orders
+    (
+      OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+      OrderDate DATE NOT NULL
+    );
+
+    CREATE TABLE OrderItems
+    (
+      OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+      OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
+      ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
+      Quantity INT NOT NULL
+    );
+    ```
+
+    creates three tables, `Products`, `Orders`, and `OrderItems`. The `DROP TABLE IF EXISTS` commands allow you to update your table schema if you decide to make changes to its composition later on. It's important to note that the three `DROP TABLE IF EXISTS` lines appear in *opposite* order that the tables are created in. This is important if your tables reference each other (which `OrderItems` does).
+
+    Next,
+
+    ```sql
+    INSERT INTO Products (ProductName, UnitPrice)
+    VALUES ('Toothpaste (Colgate, 6oz)', 2.50),
+    ...
+
+    GO
+    ```
+
+    inserts data into the tables that were just created. It's important to note the `GO` command at the very end. This specifies that all commands that precede it are executed in batch. This is important for the code that follows.
+
+    ```sql
+    CREATE PROCEDURE GetProducts
+      AS
+      BEGIN
+        SELECT * FROM Products
+      END
+    GO
+
+    CREATE PROCEDURE GetOrderItems @OrderId INT
+    ...
+    GO
+    ```
+
+    This code creates two stored procedures called `GetProducts` and `GetOrderItems`, respectively. Stored procedures allow for safer code execution when called from an API. You'll notice that each stored procedure ends in the `GO` keyword. This is because stored procedures have to be the *only* query run in its batch. These `GO` statments allow us to create multiple stored procedures in the same query file.
+
+    Notice, too, that stored procedures can also take parameters as input. `GetOrderItems` takes in an `INT` named `@OrderId` as input and uses that parameter in its query. If you want to see the result of these stored procedures in SQL Server Management Studio, you can run the following commands individually by highlighting them and clicking the green execute play button:
+
+    ```sql
     EXECUTE GetProducts;
     EXECUTE GetOrderItems 6;
     ```
@@ -132,8 +191,8 @@ Use the following links to skip to the different sections:
 
 1. Download the following tools (if you haven't already):
 
--   [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
--   [Docker](https://www.docker.com/)
+- [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
+- [Docker](https://www.docker.com/)
 
 2. Open up a new Terminal/Powershell instance and run the following command:
 
@@ -145,7 +204,7 @@ Use the following links to skip to the different sections:
 
     ![SQL Server Connection](https://media.discordapp.net/attachments/929399365318115369/1143153990431936592/Azure_Data_Studio_Connection.png)
 
-    where your password is the password that you set up in step 2. If prompted, click _Enable Trust Server Certificate_.
+    where your password is the password that you set up in step 2. If prompted, click *Enable Trust Server Certificate*.
 
 4. Navigate to `File -> New Query` and run the following query:
 
@@ -239,7 +298,71 @@ Use the following links to skip to the different sections:
         WHERE OrderItems.OrderId = @OrderId;
       END
     GO
+    ```
 
+    Let's go through what is happening in this code. First,
+
+    ```sql
+    DROP TABLE IF EXISTS OrderItems;
+    DROP TABLE IF EXISTS Orders;
+    DROP TABLE IF EXISTS Products;
+
+    ...
+
+    CREATE TABLE Products
+    (
+      ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+      ProductName VARCHAR(MAX) NOT NULL,
+      UnitPrice MONEY NOT NULL
+    );
+
+    CREATE TABLE Orders
+    (
+      OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+      OrderDate DATE NOT NULL
+    );
+
+    CREATE TABLE OrderItems
+    (
+      OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+      OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
+      ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
+      Quantity INT NOT NULL
+    );
+    ```
+
+    creates three tables, `Products`, `Orders`, and `OrderItems`. The `DROP TABLE IF EXISTS` commands allow you to update your table schema if you decide to make changes to its composition later on. It's important to note that the three `DROP TABLE IF EXISTS` lines appear in *opposite* order that the tables are created in. This is important if your tables reference each other (which `OrderItems` does).
+
+    Next,
+
+    ```sql
+    INSERT INTO Products (ProductName, UnitPrice)
+    VALUES ('Toothpaste (Colgate, 6oz)', 2.50),
+    ...
+
+    GO
+    ```
+
+    inserts data into the tables that were just created. It's important to note the `GO` command at the very end. This specifies that all commands that precede it are executed in batch. This is important for the code that follows.
+
+    ```sql
+    CREATE PROCEDURE GetProducts
+      AS
+      BEGIN
+        SELECT * FROM Products
+      END
+    GO
+
+    CREATE PROCEDURE GetOrderItems @OrderId INT
+    ...
+    GO
+    ```
+
+    This code creates two stored procedures called `GetProducts` and `GetOrderItems`, respectively. Stored procedures allow for safer code execution when called from an API. You'll notice that each stored procedure ends in the `GO` keyword. This is because stored procedures have to be the *only* query run in its batch. These `GO` statments allow us to create multiple stored procedures in the same query file.
+
+    Notice, too, that stored procedures can also take parameters as input. `GetOrderItems` takes in an `INT` named `@OrderId` as input and uses that parameter in its query. If you want to see the result of these stored procedures in SQL Server Management Studio, you can run the following commands individually by highlighting them and clicking the green execute play button:
+
+    ```sql
     EXECUTE GetProducts;
     EXECUTE GetOrderItems 6;
     ```
