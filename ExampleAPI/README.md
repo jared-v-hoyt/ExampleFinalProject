@@ -23,13 +23,13 @@ Use the following links to skip to the different sections:
 - Select the `ASP.NET Core Web API` template and hit next
 - Give your API a name and hit next
 - Create the project with the following options:
-  - Framework: .NET 7.0
-  - Authentication: None
-  - Configure for HTTPS: no
-  - Enable Docker: no
-  - Use controllers: yes
-  - Enable OpenAPI support: no
-  - Do not use top-level statements: yes
+  - **Framework:** *.NET 7.0*
+  - **Authentication:** *None*
+  - **Configure for HTTPS:** *no*
+  - **Enable Docker:** *no*
+  - **Use controllers:** *yes*
+  - **Enable OpenAPI support:** *no*
+  - **Do not use top-level statements:** *yes*
 
 03. Delete the following files:
 
@@ -66,7 +66,7 @@ Use the following links to skip to the different sections:
     }
     ```
 
-    If you named your database something else, ensure that you update the connection string with the name of _your_ database.
+    If you named your database something else, ensure that you update the connection string with the name of *your* database.
 
 07. Right-click on the project and select `Add -> New Folder`. Name this folder `Models`. Right-click on this new folder and select `Add -> New Item`. Name this file `Product.cs`. Update the file with the following code:
 
@@ -91,7 +91,7 @@ Use the following links to skip to the different sections:
 
     This file "models" how the Product table is set up in the SQL Server database you created.
 
-08. Right-click on the `Controllers` directory, select `Add -> New Scaffold Item -> API Controller with read/write actions`. Name this controller `ProductController.cs` (when naming controllers, the convention is to ensure that the name of the file always ends in the word _Controller_), and update the file with the following code:
+08. Right-click on the `Controllers` directory, select `Add -> New Scaffold Item -> API Controller with read/write actions`. Name this controller `ProductController.cs` (when naming controllers, the convention is to ensure that the name of the file always ends in the word *Controller*), and update the file with the following code:
 
     ```c#
     using Microsoft.AspNetCore.Mvc;
@@ -113,7 +113,7 @@ Use the following links to skip to the different sections:
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public ObjectResult Get()
         {
           List<Product> products = new();
 
@@ -129,7 +129,7 @@ Use the following links to skip to the different sections:
               connection.Open();
 
               using SqlDataReader reader = command.ExecuteReader();
-
+              
               while (reader.Read())
               {
                 Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
@@ -137,11 +137,11 @@ Use the following links to skip to the different sections:
               }
             }
 
-            return products;
+            return Ok(products);
           }
-          catch
+          catch (Exception exception)
           {
-            return products;
+            return BadRequest(exception);
           }
         }
 
@@ -176,7 +176,7 @@ Use the following links to skip to the different sections:
     [ApiController]
     ```
 
-    are what are known as _attributes_ in C# and associate metadeta with the code that follows. In this case, we are declaring that the code in the `ProductController` class is associated with a specific URL route (in this case, `<base_url>/api/product`) and that the class is a controller for the API we are building.
+    are what are known as *attributes* in C# and associate metadeta with the code that follows. In this case, we are declaring that the code in the `ProductController` class is associated with a specific URL route (in this case, `<base_url>/api/product`) and that the class is a controller for the API we are building.
 
     Next,
 
@@ -189,13 +189,28 @@ Use the following links to skip to the different sections:
     }
     ```
 
-    uses dependency injection to initialize a variable named `configuration` whenever an instance of `ProductController` is created. The `configuration` variable gives us access to the project's configuration files which are needed to be able to reference the project's connection string (which is stored in `appsetting.json`).
+    uses dependency injection to initialize a variable named `configuration` whenever an instance of `ProductController` is created. The `configuration` variable gives us access to the project's configuration files which are needed to be able to reference the project's connection string (which is stored in `appsettings.json`).
+
+    Next,
 
     ```c#
     [HttpGet]
     ```
 
-    is another attribute that associates the `Get` function it precedes with code that will be run whenever a `GET` request is sent (without parameters) to the appropriate route.
+    is an attribute belonging to the [Microsoft.AspNetCore.Mvc](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc?view=aspnetcore-7.0) namespace. This attribute identifies an action that supports the **HTTP GET** method when sending a **GET** request (without parameters) to `<base_url>/api/product`.
+
+    Finally,
+
+    ```c#
+    public ObjectResult Get()
+    {
+      ...
+      return Ok(products);
+      ...
+    }
+    ```
+
+    specifies a function that opens up a connection to the SQL Server database, executes the `GetProducts` stored procedure, and returns the result. The `Ok` in this instance declares that the request was successful and will send back a `200` response code along with the data that is being returned from the stored procedure.
 
 09. Navigate to `Program.cs` and update the file with the following code:
 
@@ -208,7 +223,6 @@ Use the following links to skip to the different sections:
         {
           var builder = WebApplication.CreateBuilder(args);
 
-          // Add services to the container.
           builder.Services.AddControllers();
           builder.Services.AddCors(options =>
           {
@@ -234,9 +248,26 @@ Use the following links to skip to the different sections:
     }
     ```
 
+    The notable lines of code here are
+
+    ```c#
+    builder.Services.AddCors(options =>
+    {
+      ...
+    }
+    ```
+
+    and
+
+    ```c#
+    app.UseCors("_MyAllowSubdomainPolicy");
+    ```
+
+    These lines of code grant our frontend application (Next.js application which runs on port 3000) access to the API. In practice this is not a secure way of handling requests, but for our application, it will work fine.
+
 10. Start the API by clicking the green play button near the top-middle of the IDE.
 
-11. Open Postman and send a `GET` request to `http://localhost:<port>/api/product` to ensure that everything is working correctly.
+11. Open Postman and send a `GET` request to `http://localhost:<port>/api/product` to ensure that everything is working correctly. The specific port can be found in `Properties/launchSettings.json` in the `http` profile as the value of the `applicationURL` key.
 
 ## Steps To Recreate The Project: (MAC/WINDOWS/LINUX)
 
@@ -270,6 +301,8 @@ Use the following links to skip to the different sections:
 - Microsoft.Extensions.Configuration
 - Microsoft.Extensions.Configuration.Json
 - System.Data.SqlClient
+
+  The first two packages you just installed allow you to access project configuration options (you will be using this to access a connection string) and the third package you installed allows you interact with a SQL Server database.
 
 06. Add a connection string to the project's configuration by navigating to `appsettings.json` and updating the file with the following code:
 
@@ -309,7 +342,7 @@ Use the following links to skip to the different sections:
     }
     ```
 
-08. Right-click on the `Controllers` directory and create a new file named `ProductController.cs` (when naming your controllers, make sure that the name of the file always includes the word _Controller_ at the end). Update the file with the following code:
+08. Right-click on the `Controllers` directory and create a new file named `ProductController.cs` (when naming your controllers, make sure that the name of the file always includes the word *Controller* at the end). Update the file with the following code:
 
     ```c#
     using Microsoft.AspNetCore.Mvc;
@@ -331,7 +364,7 @@ Use the following links to skip to the different sections:
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public ObjectResult Get()
         {
           List<Product> products = new();
 
@@ -347,7 +380,7 @@ Use the following links to skip to the different sections:
               connection.Open();
 
               using SqlDataReader reader = command.ExecuteReader();
-
+              
               while (reader.Read())
               {
                 Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
@@ -355,11 +388,11 @@ Use the following links to skip to the different sections:
               }
             }
 
-            return products;
+            return Ok(products);
           }
-          catch
+          catch (Exception exception)
           {
-            return products;
+            return BadRequest(exception);
           }
         }
 
@@ -386,6 +419,49 @@ Use the following links to skip to the different sections:
       }
     }
     ```
+
+    Let's go through what is happening in this controller.  First,
+
+    ```c#
+    [Route("api/[controller]")]
+    [ApiController]
+    ```
+
+    are what are known as *attributes* in C# and associate metadeta with the code that follows. In this case, we are declaring that the code in the `ProductController` class is associated with a specific URL route (in this case, `<base_url>/api/product`) and that the class is a controller for the API we are building.
+
+    Next,
+
+    ```c#
+    private readonly IConfiguration configuration;
+
+    public ProductController(IConfiguration configuration)
+    {
+      this.configuration = configuration;
+    }
+    ```
+
+    uses dependency injection to initialize a variable named `configuration` whenever an instance of `ProductController` is created. The `configuration` variable gives us access to the project's configuration files which are needed to be able to reference the project's connection string (which is stored in `appsettings.json`).
+
+    Next,
+
+    ```c#
+    [HttpGet]
+    ```
+
+    is an attribute belonging to the [Microsoft.AspNetCore.Mvc](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc?view=aspnetcore-7.0) namespace. This attribute identifies an action that supports the **HTTP GET** method when sending a **GET** request (without parameters) to `<base_url>/api/product`.
+
+    Finally,
+
+    ```c#
+    public ObjectResult Get()
+    {
+      ...
+      return Ok(products);
+      ...
+    }
+    ```
+
+    specifies a function that opens up a connection to the SQL Server database, executes the `GetProducts` stored procedure, and returns the result. The `Ok` in this instance declares that the request was successful and will send back a `200` response code along with the data that is being returned from the stored procedure.
 
 09. Navigate to `Program.cs` and update the file with the following code:
 
@@ -424,10 +500,27 @@ Use the following links to skip to the different sections:
     }
     ```
 
+    The notable lines of code here are
+
+    ```c#
+    builder.Services.AddCors(options =>
+    {
+      ...
+    }
+    ```
+
+    and
+
+    ```c#
+    app.UseCors("_MyAllowSubdomainPolicy");
+    ```
+
+    These lines of code grant our frontend application (Next.js application which runs on port 3000) access to the API. In practice this is not a secure way of handling requests, but for our application, it will work fine.
+
 10. Start the API by running the following command in the terminal:
 
     ```bash
     dotnet run
     ```
 
-11. Open Postman and send a `GET` request to `http://localhost:<port>/api/product` to ensure that everything is working correctly.
+11. Open Postman and send a `GET` request to `http://localhost:<port>/api/product` to ensure that everything is working correctly. The specific port can be found in `Properties/launchSettings.json` in the `http` profile as the value of the `applicationURL` key.
