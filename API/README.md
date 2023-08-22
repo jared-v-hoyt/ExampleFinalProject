@@ -1,15 +1,13 @@
-# ExampleAPI
+# API
 
 This README contains all of the necessary steps to create an API that connects to a local instance of a SQL Server database. It is assumed that your database has already been setup.
 
-This guide is divided into two separate sections; the first for users who prefer to code in an environment built specifically for Windows OS, and the second for Mac/Linux users or for Windows users that do not prefer to use Windows-specific tools.
+## Table of Contents
 
-Use the following links to skip to the different sections:
+- [Steps to Recreate The Project: (Windows)](#steps-to-recreate-the-project-windows)
+- [Steps To Recreate The Project: (Mac/Windows/Linux)](#steps-to-recreate-the-project-macwindowslinux)
 
-- [Steps to Recreate The Project: (WINDOWS)](#steps-to-recreate-the-project-windows)
-- [Steps To Recreate The Project: (MAC/WINDOWS/LINUX)](#steps-to-recreate-the-project-macwindowslinux)
-
-## Steps to Recreate The Project: (WINDOWS)
+## Steps to Recreate The Project: (Windows)
 
 01. Download the following tools (if you haven't already):
 
@@ -254,6 +252,10 @@ Use the following links to skip to the different sections:
     builder.Services.AddCors(options =>
     {
       ...
+          policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+      ...
     }
     ```
 
@@ -263,20 +265,22 @@ Use the following links to skip to the different sections:
     app.UseCors("_MyAllowSubdomainPolicy");
     ```
 
-    These lines of code grant our frontend application (Next.js application which runs on port 3000) access to the API. In practice this is not a secure way of handling requests, but for our application, it will work fine.
+    These lines of code tell the [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS) mechanism to allow requests from the URL `http://localhost:3000`. Essentially, this grants our frontend application (Next.js application which runs on port 3000) access to the API.
+
+    In practice, this is not the most secure way of handling requests, but for all intents and purposes, it will work fine.
 
 10. Start the API by clicking the green play button near the top-middle of the IDE.
 
 11. Open Postman and send a `GET` request to `http://localhost:<port>/api/product` to ensure that everything is working correctly. The specific port can be found in `Properties/launchSettings.json` in the `http` profile as the value of the `applicationURL` key.
 
-## Steps To Recreate The Project: (MAC/WINDOWS/LINUX)
+## Steps To Recreate The Project: (Mac/Windows/Linux)
 
 01. Download the following tools (if you haven't already):
 
 - [Dotnet 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - [Postman](https://www.postman.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
-  - `Visual NuGet` extension from Full Stack Spider
+  - **Visual NuGet** extension from Full Stack Spider
 
 02. Using the command line, navigate to where you want to store the project and execute the following command:
 
@@ -506,6 +510,10 @@ Use the following links to skip to the different sections:
     builder.Services.AddCors(options =>
     {
       ...
+          policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+      ...
     }
     ```
 
@@ -515,7 +523,9 @@ Use the following links to skip to the different sections:
     app.UseCors("_MyAllowSubdomainPolicy");
     ```
 
-    These lines of code grant our frontend application (Next.js application which runs on port 3000) access to the API. In practice this is not a secure way of handling requests, but for our application, it will work fine.
+    These lines of code tell the [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS) mechanism to allow requests from the URL `http://localhost:3000`. Essentially, this grants our frontend application (Next.js application which runs on port 3000) access to the API.
+
+    In practice, this is not the most secure way of handling requests, but for all intents and purposes, it will work fine.
 
 10. Start the API by running the following command in the terminal:
 

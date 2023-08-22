@@ -1,15 +1,15 @@
-# ExampleDatabase
+# Database
 
-**DISCLAIMER:** *This repository is to be used as a guide in setting up the final project for CSCE-361 at the University of Nebraska-Lincoln.*
+The idea behind the setup of this database is to make it as easy as possible for every student in the group to have access to the data without needing anyone to pay for hosting capabilities. To achieve this, **every student in the group needs to have their own local, identical copy of the database**.
 
-This guide is divided into two separate sections; the first for users who prefer to code in an environment built specifically for Windows OS, and the second for Mac/Linux users or for Windows users that do not prefer to use Windows-specific tools.
+This means that each student in the group will need to have their own installation of SQL Server and will need to manually insert the data into their own database. It also means that the students will not be able to access data from any other student's database. However, if each student has an identical copy of the database and of the data within the database, it will *appear* as though you all are working from the same database.
 
-Use the following links to skip to the different sections:
+## Table of Contents
 
-- [Steps to Recreate The Project: (WINDOWS)](#steps-to-recreate-the-project-windows)
-- [Steps To Recreate The Project: (MAC/WINDOWS/LINUX)](#steps-to-recreate-the-project-macwindowslinux)
+- [Steps to Recreate The Project (Windows)](#steps-to-recreate-the-project-windows)
+- [Steps To Recreate The Project (Mac/Windows/Linux)](#steps-to-recreate-the-project-macwindowslinux)
 
-## Steps to Recreate The Project: (WINDOWS)
+## Steps to Recreate The Project (Windows)
 
 1. Download the following tools (if you haven't already):
 
@@ -187,18 +187,20 @@ Use the following links to skip to the different sections:
 
     You should see the result of the two `EXECUTE` statements appear in the bottom pane.
 
-## Steps To Recreate The Project: (MAC/WINDOWS/LINUX)
+## Steps To Recreate The Project (Mac/Windows/Linux)
 
 1. Download the following tools (if you haven't already):
 
 - [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
 - [Docker](https://www.docker.com/)
 
-2. Open up a new Terminal/Powershell instance and run the following command:
+2. Make sure that Docker is running and then open up a new Terminal/Powershell instance and run the following command:
 
     ```bash
     docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=P@ssw0rd" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
     ```
+
+    If you want to change the password, then, from the official documentation, the password needs to be "*at least 8 characters including uppercase, lowercase letters, base-10 digits and/or non-alphanumeric symbols.*"
 
 3. Open Azure Data Studio and connect to the SQL Server instance using the following parameters:
 
