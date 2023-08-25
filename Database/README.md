@@ -6,10 +6,10 @@ This means that each student in the group will need to have their own installati
 
 ## Table of Contents
 
-- [Steps to Recreate The Project (Windows)](#steps-to-recreate-the-project-windows)
+- [Steps To Recreate The Project (Windows)](#steps-to-recreate-the-project-windows)
 - [Steps To Recreate The Project (Mac/Windows/Linux)](#steps-to-recreate-the-project-macwindowslinux)
 
-## Steps to Recreate The Project (Windows)
+## Steps To Recreate The Project (Windows)
 
 1. Download the following tools (if you haven't already):
 

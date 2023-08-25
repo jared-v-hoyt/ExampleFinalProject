@@ -8,7 +8,7 @@ This repository contains all of the necessary steps to kickstart the CSCE-361 (S
 
 as the API depends on the database, and the frontend depends on the API.
 
-The database and API sections have two different explanation each; the first for users who want to exclusively work in a Windows-only environment and the second for Mac and Linux users or for Windows users who do not want to exclusively work in a Windows-only environment. It is separated this way because many of the tools that we will be using (SQL Server, C#, .NET, etc.) are Microsoft products and work *very* well on the Windows OS.
+The database and API sections have two different explanations each; the first for users who want to exclusively work in a Windows-only environment and the second for Mac and Linux users or for Windows users who do not want to exclusively work in a Windows-only environment. It is separated this way because many of the tools that we will be using (SQL Server, C#, .NET, etc.) are Microsoft products and work *very* well on the Windows OS.
 
 If you are unsure of which path to pick, the following graph depicts a 2023 survey of the percentage of people that work (not exclusively) in various IDEs:
 
