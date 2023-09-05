@@ -76,7 +76,7 @@ In this example, we will be building our frontend using [Next.js](https://nextjs
 
     We now have a blank project that we can work in.
 
-5. We'll start by first creating the available routes for the application. The application will only have one route: `<base_url>/products`. To create this route, create the `/src/app/products` directory and create a file called `page.tsx` in this new directory. Update the file with the following code:
+5. We'll start by first creating the available routes for the application. The application will only have one route: `<base_url>/products`. To create this route, create the `/src/app/products` directory and create two files: `page.tsx` and `page.module.css` in this new directory. Update `page.tsx` with the following code:
 
     ```javascript
     import styles from "./page.module.css"
