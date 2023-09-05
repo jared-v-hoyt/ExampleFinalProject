@@ -72,7 +72,7 @@ This means that each student in the group will need to have their own installati
            ('Paper Towels (Bounty, 6 rolls)', 8.00),
            ('Shampoo (Pantene, 12 oz)', 5.00),
            ('Toilet Paper (Charmin, 12 rolls)', 8.00),
-           ('Laptop (HP, 15.6" display)', 800.00),
+           ('Laptop (HP, 15.6 display)', 800.00),
            ('Bed Sheets (Queen size)', 40.00),
            ('Cookware Set (non-stick, 10-piece)', 50.00);
 
@@ -258,7 +258,7 @@ This means that each student in the group will need to have their own installati
            ('Paper Towels (Bounty, 6 rolls)', 8.00),
            ('Shampoo (Pantene, 12 oz)', 5.00),
            ('Toilet Paper (Charmin, 12 rolls)', 8.00),
-           ('Laptop (HP, 15.6" display)', 800.00),
+           ('Laptop (HP, 15.6 display)', 800.00),
            ('Bed Sheets (Queen size)', 40.00),
            ('Cookware Set (non-stick, 10-piece)', 50.00);
 
