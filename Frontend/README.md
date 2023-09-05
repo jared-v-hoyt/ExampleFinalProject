@@ -268,7 +268,7 @@ In this example, we will be building our frontend using [Next.js](https://nextjs
 
 9. Before we create the actual product page, we need to add the product images to the project. Create the `/src/assets/Product Images` directory and add all of the images from [here](https://github.com/jared-v-hoyt/FinalProjectSetup/tree/main/Frontend/assets/Product%20Images) to the new directory.
 
-10. Finally, update `/src/app/products/page.tsx` with the following code:
+10. Update `/src/app/products/page.tsx` with the following code:
 
     ```javascript
     "use client";
@@ -325,7 +325,9 @@ In this example, we will be building our frontend using [Next.js](https://nextjs
     }
     ```
 
-    and update `/src/app/products/page.module.css` with the following code:
+    **Note:** replace the port number in the fetch request with the port that your backend is running on.
+
+    Update `/src/app/products/page.module.css` with the following code:
 
     ```css
     .main {
