@@ -92,7 +92,7 @@ In this example, we will be building our frontend using [Next.js](https://nextjs
 
     You can now navigate to `localhost:3000/products` to see the new component. To learn more about routing, check out [Routing Fundamentals](https://nextjs.org/docs/app/building-your-application/routing) from the Next.js documentation.
 
-6. To be able to navigate between these routes without directly typing the URLs in, we need to create a navigation bar that users can interact with. Create the `src/components/NavigationBar` directory and two files within this directory: `NavigationBar.tsx` and `NavigationBar`. Update `NavigationBar.tsx` with the following code:
+6. To be able to navigate between these routes without directly typing the URLs in, we need to create a navigation bar that users can interact with. Create the `src/components/NavigationBar` directory and two files within this directory: `NavigationBar.tsx` and `NavigationBar.module.css`. Update `NavigationBar.tsx` with the following code:
 
     ```javascript
     import Link from 'next/link';
