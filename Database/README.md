@@ -74,7 +74,7 @@ This means that each student in the group will need to have their own installati
            ('Toilet Paper (Charmin, 12 rolls)', 8.00),
            ('Laptop (HP, 15.6" display)', 800.00),
            ('Bed Sheets (Queen size)', 40.00),
-           ('Cookware Set (non-stick, 10-piece) ', 50.00);
+           ('Cookware Set (non-stick, 10-piece)', 50.00);
 
     INSERT INTO Orders (OrderDate)
     VALUES ('2023-08-17'),
@@ -260,7 +260,7 @@ This means that each student in the group will need to have their own installati
            ('Toilet Paper (Charmin, 12 rolls)', 8.00),
            ('Laptop (HP, 15.6" display)', 800.00),
            ('Bed Sheets (Queen size)', 40.00),
-           ('Cookware Set (non-stick, 10-piece) ', 50.00);
+           ('Cookware Set (non-stick, 10-piece)', 50.00);
 
     INSERT INTO Orders (OrderDate)
     VALUES ('2023-08-17'),

@@ -8,6 +8,10 @@ This repository contains all of the necessary steps to kickstart the CSCE-361 (S
 
 as the API depends on the database, and the frontend depends on the API.
 
+This project is based off of the online store final project option, and if you complete all three sections, you should have a project that looks similar to the following:
+
+![Project image](https://media.discordapp.net/attachments/929399365318115369/1145038255633485895/Screen_Shot_2023-08-26_at_11.46.53_AM.png?width=2076&height=1138)
+
 The database and API sections have two different explanations each; the first for users who want to exclusively work in a Windows-only environment and the second for Mac and Linux users or for Windows users who do not want to exclusively work in a Windows-only environment. It is separated this way because many of the tools that we will be using (SQL Server, C#, .NET, etc.) are Microsoft products and work *very* well on the Windows OS.
 
 If you are unsure of which path to pick, the following graph depicts a 2023 survey of the percentage of people that work (not exclusively) in various IDEs:
