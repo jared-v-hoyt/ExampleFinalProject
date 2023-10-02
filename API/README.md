@@ -51,16 +51,16 @@ This README contains all of the necessary steps to create an API that connects t
 
     ```json
     {
-      "Logging": {
-        "LogLevel": {
-          "Default": "Information",
-          "Microsoft.AspNetCore": "Warning"
+        "Logging": {
+            "LogLevel": {
+                "Default": "Information",
+                "Microsoft.AspNetCore": "Warning"
+            }
+        },
+        "AllowedHosts": "*",
+        "ConnectionStrings": {
+            "local_database": "Server=localhost\\SQLEXPRESS;Database=ExampleDatabase;Trusted_Connection=True;"
         }
-      },
-      "AllowedHosts": "*",
-      "ConnectionStrings": {
-        "local_database": "Server=localhost\\SQLEXPRESS;Database=ExampleDatabase;Trusted_Connection=True;"
-      }
     }
     ```
 
@@ -71,19 +71,19 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     namespace ExampleAPI.Models
     {
-      public class Product
-      {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public decimal UnitPrice { get; set; }
-
-        public Product(int ProductId, string ProductName, decimal UnitPrice)
+        public class Product
         {
-          this.ProductId = ProductId;
-          this.ProductName = ProductName;
-          this.UnitPrice = UnitPrice;
+            public int ProductId { get; set; }
+            public string ProductName { get; set; }
+            public decimal UnitPrice { get; set; }
+
+            public Product(int ProductId, string ProductName, decimal UnitPrice)
+            {
+                this.ProductId = ProductId;
+                this.ProductName = ProductName;
+                this.UnitPrice = UnitPrice;
+            }
         }
-      }
     }
     ```
 
@@ -99,71 +99,71 @@ This README contains all of the necessary steps to create an API that connects t
 
     namespace ExampleAPI.Controllers
     {
-      [Route("api/[controller]")]
-      [ApiController]
-      public class ProductController : ControllerBase
-      {
-        private readonly IConfiguration configuration;
-
-        public ProductController(IConfiguration configuration)
+        [Route("api/[controller]")]
+        [ApiController]
+        public class ProductController : ControllerBase
         {
-          this.configuration = configuration;
-        }
+            private readonly IConfiguration configuration;
 
-        [HttpGet]
-        public ObjectResult Get()
-        {
-          List<Product> products = new();
-
-          try
-          {
-            using (SqlConnection connection = new(configuration.GetConnectionString("local_database")))
+            public ProductController(IConfiguration configuration)
             {
-              SqlCommand command = new ("GetProducts", connection)
-              {
-                CommandType = CommandType.StoredProcedure
-              };
-
-              connection.Open();
-
-              using SqlDataReader reader = command.ExecuteReader();
-              
-              while (reader.Read())
-              {
-                Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
-                products.Add(product);
-              }
+                this.configuration = configuration;
             }
 
-            return Ok(products);
-          }
-          catch (Exception exception)
-          {
-            return BadRequest(exception);
-          }
-        }
+            [HttpGet]
+            public ObjectResult Get()
+            {
+                List<Product> products = new();
 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-          return "value";
-        }
+                try
+                {
+                    using (SqlConnection connection = new(configuration.GetConnectionString("local_database")))
+                    {
+                        SqlCommand command = new ("GetProducts", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
 
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+                        connection.Open();
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+                        using SqlDataReader reader = command.ExecuteReader();
+                        
+                        while (reader.Read())
+                        {
+                            Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
+                            products.Add(product);
+                        }
+                    }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                    return Ok(products);
+                }
+                catch (Exception exception)
+                {
+                    return BadRequest(exception);
+                }
+            }
+
+            [HttpGet("{id}")]
+            public string Get(int id)
+            {
+                return "value";
+            }
+
+            [HttpPost]
+            public void Post([FromBody] string value)
+            {
+            }
+
+            [HttpPut("{id}")]
+            public void Put(int id, [FromBody] string value)
+            {
+            }
+
+            [HttpDelete("{id}")]
+            public void Delete(int id)
+            {
+            }
         }
-      }
     }
     ```
 
@@ -183,7 +183,7 @@ This README contains all of the necessary steps to create an API that connects t
 
     public ProductController(IConfiguration configuration)
     {
-      this.configuration = configuration;
+        this.configuration = configuration;
     }
     ```
 
@@ -202,9 +202,9 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     public ObjectResult Get()
     {
-      ...
-      return Ok(products);
-      ...
+        ...
+        return Ok(products);
+        ...
     }
     ```
 
@@ -215,34 +215,34 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     namespace ExampleAPI
     {
-      public class Program
-      {
-        public static void Main(string[] args)
+        public class Program
         {
-          var builder = WebApplication.CreateBuilder(args);
+            public static void Main(string[] args)
+            {
+                var builder = WebApplication.CreateBuilder(args);
 
-          builder.Services.AddControllers();
-          builder.Services.AddCors(options =>
-          {
-            options.AddPolicy(name: "_MyAllowSubdomainPolicy",
-              policy =>
-              {
-                policy.WithOrigins("http://localhost:3000")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-              });
-          });
+                builder.Services.AddControllers();
+                builder.Services.AddCors(options =>
+                {
+                    options.AddPolicy(name: "_MyAllowSubdomainPolicy",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+                });
 
-          var app = builder.Build();
+                var app = builder.Build();
 
-          // Use CORS middleware
-          app.UseCors("_MyAllowSubdomainPolicy");
+                // Use CORS middleware
+                app.UseCors("_MyAllowSubdomainPolicy");
 
-          app.UseAuthorization();
-          app.MapControllers();
-          app.Run();
+                app.UseAuthorization();
+                app.MapControllers();
+                app.Run();
+            }
         }
-      }
     }
     ```
 
@@ -251,11 +251,11 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     builder.Services.AddCors(options =>
     {
-      ...
-          policy.WithOrigins("http://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-      ...
+        ...
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        ...
     }
     ```
 
@@ -312,16 +312,16 @@ This README contains all of the necessary steps to create an API that connects t
 
     ```json
     {
-      "Logging": {
-        "LogLevel": {
-          "Default": "Information",
-          "Microsoft.AspNetCore": "Warning"
+        "Logging": {
+            "LogLevel": {
+                "Default": "Information",
+                "Microsoft.AspNetCore": "Warning"
+            }
+        },
+        "AllowedHosts": "*",
+        "ConnectionStrings": {
+            "local_database": "Server=localhost,1433;Database=ExampleDatabase;User Id=sa;Password=P@ssw0rd;"
         }
-      },
-      "AllowedHosts": "*",
-      "ConnectionStrings": {
-        "local_database": "Server=localhost,1433;Database=ExampleDatabase;User Id=sa;Password=P@ssw0rd;"
-      }
     }
     ```
 
@@ -330,19 +330,19 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     namespace ExampleAPI.Models
     {
-      public class Product
-      {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public decimal UnitPrice { get; set; }
-
-        public Product(int ProductId, string ProductName, decimal UnitPrice)
+        public class Product
         {
-          this.ProductId = ProductId;
-          this.ProductName = ProductName;
-          this.UnitPrice = UnitPrice;
+            public int ProductId { get; set; }
+            public string ProductName { get; set; }
+            public decimal UnitPrice { get; set; }
+
+            public Product(int ProductId, string ProductName, decimal UnitPrice)
+            {
+                this.ProductId = ProductId;
+                this.ProductName = ProductName;
+                this.UnitPrice = UnitPrice;
+            }
         }
-      }
     }
     ```
 
@@ -356,71 +356,71 @@ This README contains all of the necessary steps to create an API that connects t
 
     namespace ExampleAPI.Controllers
     {
-      [Route("api/[controller]")]
-      [ApiController]
-      public class ProductController : ControllerBase
-      {
-        private readonly IConfiguration configuration;
-
-        public ProductController(IConfiguration configuration)
+        [Route("api/[controller]")]
+        [ApiController]
+        public class ProductController : ControllerBase
         {
-          this.configuration = configuration;
-        }
+            private readonly IConfiguration configuration;
 
-        [HttpGet]
-        public ObjectResult Get()
-        {
-          List<Product> products = new();
-
-          try
-          {
-            using (SqlConnection connection = new(configuration.GetConnectionString("local_database")))
+            public ProductController(IConfiguration configuration)
             {
-              SqlCommand command = new ("GetProducts", connection)
-              {
-                CommandType = CommandType.StoredProcedure
-              };
-
-              connection.Open();
-
-              using SqlDataReader reader = command.ExecuteReader();
-              
-              while (reader.Read())
-              {
-                Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
-                products.Add(product);
-              }
+                this.configuration = configuration;
             }
 
-            return Ok(products);
-          }
-          catch (Exception exception)
-          {
-            return BadRequest(exception);
-          }
-        }
+            [HttpGet]
+            public ObjectResult Get()
+            {
+                List<Product> products = new();
 
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-          return "value";
-        }
+                try
+                {
+                    using (SqlConnection connection = new(configuration.GetConnectionString("local_database")))
+                    {
+                        SqlCommand command = new ("GetProducts", connection)
+                        {
+                            CommandType = CommandType.StoredProcedure
+                        };
 
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+                        connection.Open();
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+                        using SqlDataReader reader = command.ExecuteReader();
+                        
+                        while (reader.Read())
+                        {
+                            Product product = new(reader.GetInt32(0), reader.GetString(1), reader.GetDecimal(2));
+                            products.Add(product);
+                        }
+                    }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+                    return Ok(products);
+                }
+                catch (Exception exception)
+                {
+                    return BadRequest(exception);
+                }
+            }
+
+            [HttpGet("{id}")]
+            public string Get(int id)
+            {
+                return "value";
+            }
+
+            [HttpPost]
+            public void Post([FromBody] string value)
+            {
+            }
+
+            [HttpPut("{id}")]
+            public void Put(int id, [FromBody] string value)
+            {
+            }
+
+            [HttpDelete("{id}")]
+            public void Delete(int id)
+            {
+            }
         }
-      }
     }
     ```
 
@@ -440,7 +440,7 @@ This README contains all of the necessary steps to create an API that connects t
 
     public ProductController(IConfiguration configuration)
     {
-      this.configuration = configuration;
+        this.configuration = configuration;
     }
     ```
 
@@ -459,9 +459,9 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     public ObjectResult Get()
     {
-      ...
-      return Ok(products);
-      ...
+        ...
+        return Ok(products);
+        ...
     }
     ```
 
@@ -473,34 +473,34 @@ This README contains all of the necessary steps to create an API that connects t
     namespace ExampleAPI
     {
       public class Program
-      {
-        public static void Main(string[] args)
         {
-          var builder = WebApplication.CreateBuilder(args);
+            public static void Main(string[] args)
+            {
+                var builder = WebApplication.CreateBuilder(args);
 
-          // Add services to the container.
-          builder.Services.AddControllers();
-          builder.Services.AddCors(options =>
-          {
-            options.AddPolicy(name: "_MyAllowSubdomainPolicy",
-              policy =>
-              {
-                  policy.WithOrigins("http://localhost:3000")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-              });
-          });
+                // Add services to the container.
+                builder.Services.AddControllers();
+                builder.Services.AddCors(options =>
+                {
+                    options.AddPolicy(name: "_MyAllowSubdomainPolicy",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+                });
 
-          var app = builder.Build();
+                var app = builder.Build();
 
-          // Use CORS middleware
-          app.UseCors("_MyAllowSubdomainPolicy");
+                // Use CORS middleware
+                app.UseCors("_MyAllowSubdomainPolicy");
 
-          app.UseAuthorization();
-          app.MapControllers();
-          app.Run();
+                app.UseAuthorization();
+                app.MapControllers();
+                app.Run();
+            }
         }
-      }
     }
     ```
 
@@ -509,11 +509,11 @@ This README contains all of the necessary steps to create an API that connects t
     ```c#
     builder.Services.AddCors(options =>
     {
-      ...
-          policy.WithOrigins("http://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-      ...
+        ...
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        ...
     }
     ```
 

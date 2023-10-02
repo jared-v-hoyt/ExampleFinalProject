@@ -45,23 +45,23 @@ This means that each student in the group will need to have their own installati
 
     CREATE TABLE Products
     (
-      ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      ProductName VARCHAR(MAX) NOT NULL,
-      UnitPrice MONEY NOT NULL
+        ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        ProductName VARCHAR(MAX) NOT NULL,
+        UnitPrice MONEY NOT NULL
     );
 
     CREATE TABLE Orders
     (
-      OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderDate DATE NOT NULL
+        OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderDate DATE NOT NULL
     );
 
     CREATE TABLE OrderItems
     (
-      OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
-      ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
-      Quantity INT NOT NULL
+        OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
+        ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
+        Quantity INT NOT NULL
     );
 
     INSERT INTO Products (ProductName, UnitPrice)
@@ -102,19 +102,19 @@ This means that each student in the group will need to have their own installati
     GO
 
     CREATE PROCEDURE GetProducts
-      AS
-      BEGIN
-        SELECT * FROM Products
-      END
+        AS
+        BEGIN
+            SELECT * FROM Products
+        END
     GO
 
     CREATE PROCEDURE GetOrderItems @OrderId INT
-      AS
-      BEGIN
-        SELECT Products.ProductName, Products.UnitPrice, OrderItems.Quantity FROM OrderItems
-        INNER JOIN Products ON (OrderItems.ProductId = Products.ProductId)
-        WHERE OrderItems.OrderId = @OrderId;
-      END
+        AS
+        BEGIN
+            SELECT Products.ProductName, Products.UnitPrice, OrderItems.Quantity FROM OrderItems
+            INNER JOIN Products ON (OrderItems.ProductId = Products.ProductId)
+            WHERE OrderItems.OrderId = @OrderId;
+        END
     GO
     ```
 
@@ -129,23 +129,23 @@ This means that each student in the group will need to have their own installati
 
     CREATE TABLE Products
     (
-      ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      ProductName VARCHAR(MAX) NOT NULL,
-      UnitPrice MONEY NOT NULL
+        ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        ProductName VARCHAR(MAX) NOT NULL,
+        UnitPrice MONEY NOT NULL
     );
 
     CREATE TABLE Orders
     (
-      OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderDate DATE NOT NULL
+        OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderDate DATE NOT NULL
     );
 
     CREATE TABLE OrderItems
     (
-      OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
-      ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
-      Quantity INT NOT NULL
+        OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
+        ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
+        Quantity INT NOT NULL
     );
     ```
 
@@ -165,10 +165,10 @@ This means that each student in the group will need to have their own installati
 
     ```sql
     CREATE PROCEDURE GetProducts
-      AS
-      BEGIN
-        SELECT * FROM Products
-      END
+        AS
+        BEGIN
+            SELECT * FROM Products
+        END
     GO
 
     CREATE PROCEDURE GetOrderItems @OrderId INT
@@ -231,23 +231,23 @@ This means that each student in the group will need to have their own installati
 
     CREATE TABLE Products
     (
-      ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      ProductName VARCHAR(MAX) NOT NULL,
-      UnitPrice MONEY NOT NULL
+        ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        ProductName VARCHAR(MAX) NOT NULL,
+        UnitPrice MONEY NOT NULL
     );
 
     CREATE TABLE Orders
     (
-      OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderDate DATE NOT NULL
+        OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderDate DATE NOT NULL
     );
 
     CREATE TABLE OrderItems
     (
-      OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
-      ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
-      Quantity INT NOT NULL
+        OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
+        ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
+        Quantity INT NOT NULL
     );
 
     INSERT INTO Products (ProductName, UnitPrice)
@@ -288,19 +288,19 @@ This means that each student in the group will need to have their own installati
     GO
 
     CREATE PROCEDURE GetProducts
-      AS
-      BEGIN
-        SELECT * FROM Products
-      END
+        AS
+        BEGIN
+            SELECT * FROM Products
+        END
     GO
 
     CREATE PROCEDURE GetOrderItems @OrderId INT
-      AS
-      BEGIN
-        SELECT Products.ProductName, Products.UnitPrice, OrderItems.Quantity FROM OrderItems
-        INNER JOIN Products ON (OrderItems.ProductId = Products.ProductId)
-        WHERE OrderItems.OrderId = @OrderId;
-      END
+        AS
+        BEGIN
+            SELECT Products.ProductName, Products.UnitPrice, OrderItems.Quantity FROM OrderItems
+            INNER JOIN Products ON (OrderItems.ProductId = Products.ProductId)
+            WHERE OrderItems.OrderId = @OrderId;
+        END
     GO
     ```
 
@@ -315,23 +315,23 @@ This means that each student in the group will need to have their own installati
 
     CREATE TABLE Products
     (
-      ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      ProductName VARCHAR(MAX) NOT NULL,
-      UnitPrice MONEY NOT NULL
+        ProductId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        ProductName VARCHAR(MAX) NOT NULL,
+        UnitPrice MONEY NOT NULL
     );
 
     CREATE TABLE Orders
     (
-      OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderDate DATE NOT NULL
+        OrderId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderDate DATE NOT NULL
     );
 
     CREATE TABLE OrderItems
     (
-      OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
-      OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
-      ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
-      Quantity INT NOT NULL
+        OrderItemId INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
+        OrderId INT FOREIGN KEY REFERENCES Orders (OrderId) NOT NULL,
+        ProductId INT FOREIGN KEY REFERENCES Products (ProductId) NOT NULL,
+        Quantity INT NOT NULL
     );
     ```
 
@@ -351,10 +351,10 @@ This means that each student in the group will need to have their own installati
 
     ```sql
     CREATE PROCEDURE GetProducts
-      AS
-      BEGIN
-        SELECT * FROM Products
-      END
+        AS
+        BEGIN
+            SELECT * FROM Products
+        END
     GO
 
     CREATE PROCEDURE GetOrderItems @OrderId INT
