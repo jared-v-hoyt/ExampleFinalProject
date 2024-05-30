@@ -28,35 +28,19 @@ It takes approximately 1 to 2 hours to complete all three sections (given that y
 
 ## Required Tools (Windows)
 
-### Database
-
 - [SQL Server 2022 (Express)](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 - [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
-
-### API
-
 - [Dotnet 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - [Postman](https://www.postman.com/)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/)
-
-### Frontend
-
 - [Node.js](https://nodejs.org/en)
 
 ## Required Tools (Mac/Windows/Linux)
 
-### Database
-
 - [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall)
 - [Docker](https://www.docker.com/)
-
-### API
-
 - [Dotnet 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - [Postman](https://www.postman.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
   - **Visual NuGet** extension from Full Stack Spider
-
-### Frontend
-
 - [Node.js](https://nodejs.org/en)
